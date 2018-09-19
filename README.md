@@ -6,6 +6,6 @@ This folder will be where you complete your pre-class each week. The first time 
 Before you continue, Edit this document with:
 
 
-- Preferred Name: _Max________________________________
-- Brown Name: _Mingxuan Bo__________________________
-- Brown E-mail: _mingxuan_bo@brown.edu_____________________
+- Preferred Name: _________________________________
+- Brown Name: ___________________________
+- Brown E-mail: ______________________
