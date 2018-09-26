@@ -1,1 +1,129 @@
 
+---
+title: "pre_class week 3"
+author: "Mingxuan Bo"
+date: "9/25/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1
+How many unique countries are represented per continent?
+
+```{r}
+#install.packages("dplyr")
+library(dplyr)
+
+#install.packages("gapminder")
+library(gapminder)
+asia<-gapminder[gapminder$continent=="Asia",]
+africa<-gapminder[gapminder$continent=="Africa",]
+europe<-gapminder[gapminder$continent=="Europe",]
+americas<-gapminder[gapminder$continent=="Americas",]
+oceania<-gapminder[gapminder$continent=="Oceania",]
+
+length(unique(asia$country))
+length(unique(africa$country))
+length(unique(europe$country))
+length(unique(americas$country))
+length(unique(oceania$country))
+```
+
+
+## 2
+
+Which European nation had the lowest GDP per capita in 1997?
+
+```{r}
+euro_1997<-gapminder[gapminder$continent=="Europe"&gapminder$year=="1997",]
+euro_1997<-arrange(euro_1997,gdpPercap)
+euro_1997[1,1]
+```
+
+## 3
+
+According to the data available, what was the average life expectancy across each continent in the 1980s?
+
+```{r}
+unique(gapminder$year)
+asia_1980s<-asia[asia$year=="1982"|asia$year=="1987",]
+africa_1980s<-africa[africa$year=="1982"|africa$year=="1987",]
+europe_1980s<-europe[europe$year=="1982"|europe$year=="1987",]
+americas_1980s<-americas[americas$year=="1982"|americas$year=="1987",]
+oceania_1980s<-oceania[oceania$year=="1982"|oceania$year=="1987",]
+
+mean(asia_1980s$lifeExp)
+mean(africa_1980s$lifeExp)
+mean(europe_1980s$lifeExp)
+mean(americas_1980s$lifeExp)
+mean(oceania_1980s$lifeExp)
+```
+
+## 4
+
+What 5 countries have the highest total GDP over all years combined?
+
+```{r}
+total_gdp_rank<-arrange(gapminder,gapminder$pop*gapminder$gdpPercap)
+unique_rank<-unique(total_gdp_rank$country)
+unique_rank[(length(unique_rank)-4):length(unique_rank)]
+```
+
+## 5
+
+What countries and years had life expectancies of at least 80 years? N.b. only output the columns of interest: country, life expectancy and year (in that order).
+
+```{r}
+over_80<-gapminder[gapminder$lifeExp>=80,]
+bind_cols(over_80[,1],over_80[,4],over_80[,3])
+over_80$country
+```
+
+## 6
+
+What 10 countries have the strongest correlation (in either direction) between life expectancy and per capita GDP?
+
+```{r}
+cor_countries<-summarize(group_by(gapminder,country),corr=cor(lifeExp,gdpPercap))
+arrange(cor_countries,-abs(corr))[1:10,]
+```
+
+
+## 7
+
+Which combinations of continent (besides Asia) and year have the highest average population across all countries?
+
+```{r}
+continent_pop<-summarize(group_by(gapminder,continent),total_pop=sum(as.numeric(pop)))
+arrange(continent_pop,-total_pop)[2,]
+```
+
+## 8
+
+Which three countries have had the most consistent population estimates (i.e. lowest standard deviation) across the years of available data?
+
+```{r}
+countries_sd<-summarize(group_by(gapminder,country),std_dev=sd(pop))
+countries_sd<-arrange(countries_sd,std_dev)
+countries_sd[1:3,] 
+```
+
+## 9
+
+Subset gm to only include observations from 1992 and store the results as gm1992. What kind of object is this?
+
+```{r}
+gm1992<-filter(gapminder,year==1992)
+```
+
+
+## 10
+
+Which observations indicate that the population of a country has decreased from the previous year and the life expectancy has increased from the previous year? 
+
+```{r}
+temp<-filter(gapminder,pop<lag(pop)&lifeExp>lag(lifeExp))
+```
