@@ -16,22 +16,9 @@ knitr::opts_chunk$set(echo = TRUE)
 How many unique countries are represented per continent?
 
 ```{r}
-#install.packages("dplyr")
-library(dplyr)
-
-#install.packages("gapminder")
-library(gapminder)
-asia<-gapminder[gapminder$continent=="Asia",]
-africa<-gapminder[gapminder$continent=="Africa",]
-europe<-gapminder[gapminder$continent=="Europe",]
-americas<-gapminder[gapminder$continent=="Americas",]
-oceania<-gapminder[gapminder$continent=="Oceania",]
-
-length(unique(asia$country))
-length(unique(africa$country))
-length(unique(europe$country))
-length(unique(americas$country))
-length(unique(oceania$country))
+gapminder%>%
+  group_by(continent)%>%
+  summarize(uniq_ctry<-n_distinct(country))
 ```
 
 
@@ -50,18 +37,10 @@ euro_1997[1,1]
 According to the data available, what was the average life expectancy across each continent in the 1980s?
 
 ```{r}
-unique(gapminder$year)
-asia_1980s<-asia[asia$year=="1982"|asia$year=="1987",]
-africa_1980s<-africa[africa$year=="1982"|africa$year=="1987",]
-europe_1980s<-europe[europe$year=="1982"|europe$year=="1987",]
-americas_1980s<-americas[americas$year=="1982"|americas$year=="1987",]
-oceania_1980s<-oceania[oceania$year=="1982"|oceania$year=="1987",]
-
-mean(asia_1980s$lifeExp)
-mean(africa_1980s$lifeExp)
-mean(europe_1980s$lifeExp)
-mean(americas_1980s$lifeExp)
-mean(oceania_1980s$lifeExp)
+gapminder%>%
+  group_by(continent)%>%
+  filter(year>=1980 & year<1990)%>%
+  summarize(avg_lifeExp<-mean(lifeExp))
 ```
 
 ## 4
