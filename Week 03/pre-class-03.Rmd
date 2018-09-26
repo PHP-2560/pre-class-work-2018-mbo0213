@@ -1,9 +1,9 @@
 
 ---
-## title: "pre_class week 3"
+title: "pre_class week 3"
 
-## author: "Mingxuan Bo"
-## date: "9/25/2018"
+author: "Mingxuan Bo"
+date: "9/25/2018"
 
 output: html_document
 ---
