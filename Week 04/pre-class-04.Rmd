@@ -78,6 +78,4 @@ for (m in 1:6) {
   }
 }
 (survey.clean=cbind(survey.clean,invalid.answers))
-
-print(survey.clean)
 ```
