@@ -1,1 +1,62 @@
+---
+title: "pre-class04"
+author: "Mingxuan Bo"
+date: "October 14, 2018"
+output: github_document
+---
+# pre-class
 
+
+Make sure you commit this often with meaningful messages. 
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+1. Read the source code for each of the following three functions, puzzle out what they do, and then brainstorm better names.
+
+```{r}
+##f1 takes 2 vectors as arguements and returns a vector of TRUE & FALSE where the nth element is TRUE if the nth elements of 2 arguements vector are the same, and is FALSE if not the same.
+
+##better name: VectorsCompare().
+
+##f2 takes a vector x as arguement and returns "NULL" if x is empty or contains only one element. Otherwise, f2 remove the last element from vector x.
+
+##better name: RemoveLast().
+
+##f3 takes 2 vectors x&y as arguements and return a vetcor whose length is the same as x and elements are repetition of y.
+
+##better names:RepYbyXlength()
+```
+
+2. Compare and contrast rnorm() and MASS::mvrnorm(). How could you make them more consistent?
+```{r}
+##rnorm(n,mu,sigma) takes 3 number as argument, returns a vector of n random samples from normal distribution of mean=mu and standard deviation=sigma.
+##While MASS::mvrnorm(n,mu,sigma) are all same as rnorm() except that the first rows of generated data are identical no matter what value is chosen for n, for example, if we draw 100 observations and then draw 110, the 2 vectors are the same for the first 100 elements.
+```
+
+
+3. Use `lapply()` and an anonymous function to find the coefficient of variation (the standard deviation divided by the mean) for all columns in the mtcars dataset. 
+```{r}
+CoefOfVari=function(vec){
+  return(mean(vec,na.rm = TRUE)/sd(vec,na.rm = TRUE))
+}
+lapply(mtcars, CoefOfVari)
+```
+
+
+4. Use vapply() to:
+    a. Compute the standard deviation of every column in a numeric data frame.
+```{r}
+##We will use mtcar data for a:
+vapply(mtcars, sd, 1)
+```
+    
+b. Compute the standard deviation of every numeric column in a mixed data frame. (Hint: you’ll need to use vapply() twice.)
+```{r}
+##We will use CO2 data for b:
+vapply(Filter(is.numeric,CO2), sd, 1)
+```
